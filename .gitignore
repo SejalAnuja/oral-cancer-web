@@ -4,4 +4,4 @@ __pycache__/
 *.db
 static/uploads/
 static/heatmaps/
-reports/
+reports/model/*.h5
