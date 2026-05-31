@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Detection History</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="header">
+
+<div class="logo">
+Detection History
+</div>
+
+<a href="/dashboard">
+<button class="btn-history">
+Back to Dashboard
+</button> 
+</a>
+
+</div>
+
+
+<div class="history-wrapper">
+
+
+<!-- TABLE CARD -->
+<div class="history-card">
+
+<h2>Scan Records</h2>
+
+<table class="history-table">
+
+<tr>
+
+<th>Date</th>
+<th>Result</th>
+<th>Confidence</th>
+<th>Original</th>
+<th>Heatmap</th>
+<th>Report</th>
+
+</tr>
+
+{% for row in data %}
+
+<tr>
+
+<td>{{ row.date }}</td>
+
+<td>
+
+<span class="
+{% if row.result=='Cancer' %}
+badge-red
+{% else %}
+badge-green
+{% endif %}
+">
+
+{{ row.result }}
+
+</span>
+
+</td>
+
+
+<td>
+
+<div class="bar-bg">
+
+<div class="
+{% if row.result=='Cancer' %}
+bar-red
+{% else %}
+bar-green
+{% endif %}
+"
+style="width: {{ row.confidence }}%;">
+</div>
+
+</div>
+
+{{ row.confidence }}%
+
+</td>
+
+
+<td>
+<img src="{{ row.image_path }}" class="thumb">
+</td>
+
+
+<td>
+<img src="{{ row.heatmap_path }}" class="thumb">
+</td>
+
+
+<td>
+
+<a href="/download-report/{{ row.id }}">
+<button class="btn-download">
+PDF
+</button>
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+
+<!-- PAGINATION -->
+
+<div class="pagination">
+
+{% if page > 1 %}
+<a href="/history?page={{ page-1 }}">Previous</a>
+{% endif %}
+
+Page {{ page }} of {{ total_pages }}
+
+{% if page < total_pages %}
+<a href="/history?page={{ page+1 }}">Next</a>
+{% endif %}
+
+</div>
+
+</div>
+
+
+<!-- STATS -->
+<div class="stats-row">
+
+<div class="stat-box">
+
+Total Scans
+
+<h2>{{ total_scans }}</h2>
+
+</div>
+
+
+<div class="stat-box">
+
+Detection Rate
+
+<h2>{{ detection_rate }}%</h2>
+
+</div>
+
+
+<div class="stat-box">
+
+Average Confidence
+
+<h2>{{ avg_confidence }}%</h2>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Oral Cancer Detection Dashboard</title>
+
+<link rel="stylesheet" href="/static/css/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Oral Cancer Detection Dashboard</h1>
+
+<a href="/history">
+<button class="history-btn">View History</button>
+</a>
+
+<form action="/predict" method="POST" enctype="multipart/form-data">
+
+<input type="file" name="image" required>
+
+<button type="submit">Predict</button>
+
+</form>
+
+{% if result %}
+
+<div class="result">
+
+<h2 class="{{ result }}">
+Prediction: {{ result }}
+</h2>
+
+<p>Confidence: {{ confidence }}%</p>
+
+<p>Cancer Probability: {{ cancer_prob }}%</p>
+
+<p>Normal Probability: {{ normal_prob }}%</p>
+
+</div>
+
+<div class="images">
+
+<h3>Original Image</h3>
+
+<img src="{{ image_path }}">
+
+<h3>GradCAM Heatmap</h3>
+
+<img src="{{ heatmap_path }}">
+
+<a href="{{ heatmap_path }}" download>
+
+<button class="download-btn">
+Download Heatmap
+</button>
+
+</a>
+
+</div>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>

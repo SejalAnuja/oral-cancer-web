@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>OralDetect Login</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/auth.css') }}">
+
+</head>
+
+<body>
+
+<div class="auth-container">
+
+    <!-- LEFT SIDE -->
+    <div class="auth-left">
+
+        <div class="brand">
+            OralDetect
+        </div>
+
+        <h1>
+            Advanced Oral<br>
+            <span>Cancer Detection</span>
+        </h1>
+
+        <p>
+            Empowering clinicians with AI-driven diagnostics
+            for early identification and personalized patient care.
+        </p>
+
+        <div class="badges">
+
+            <div class="badge">
+                ✓ Secure & Reliable
+            </div>
+
+            <div class="badge">
+                ⚡ Real-time Analysis
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT SIDE -->
+    <div class="auth-right">
+
+        <div class="auth-card">
+
+            <h2>Welcome Back</h2>
+
+            <p>
+                Enter your credentials to access dashboard
+            </p>
+
+            {% if error %}
+            <div class="error">
+                {{ error }}
+            </div>
+            {% endif %}
+
+            <form method="POST">
+
+                <label>Email</label>
+
+                <input type="email"
+                       name="email"
+                       required>
+
+
+                <label>Password</label>
+
+                <input type="password"
+                       name="password"
+                       required>
+
+
+                <button class="btn-primary">
+                    Sign In to Dashboard →
+                </button>
+
+            </form>
+
+
+            <div class="auth-footer">
+
+                New user?
+
+                <a href="/signup">
+                    Create Clinician Account
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

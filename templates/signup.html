@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>OralDetect Signup</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/auth.css') }}">
+
+</head>
+
+<body>
+
+<div class="auth-container">
+
+    <!-- LEFT SIDE -->
+    <div class="auth-left blue">
+
+        <div class="brand">
+            OralDetect
+        </div>
+
+        <h1>
+            Empowering Clinicians<br>
+            with AI
+        </h1>
+
+        <p>
+            Join thousands of medical professionals using our
+            AI-driven diagnostic assistant.
+        </p>
+
+        <div class="badges">
+
+            <div class="badge">
+                ✓ High accuracy screening
+            </div>
+
+
+            <div class="badge">
+                ✓ Secure & Reliable
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT SIDE -->
+    <div class="auth-right">
+
+        <div class="auth-card">
+
+            <h2>Professional Registration</h2>
+
+            <p>Create your secure clinical account</p>
+
+            {% if error %}
+            <div class="error">
+                {{ error }}
+            </div>
+            {% endif %}
+
+            <form method="POST">
+
+                <label>Full Name</label>
+
+                <input type="text"
+                       name="name"
+                       required>
+
+
+                <label>Email</label>
+
+                <input type="email"
+                       name="email"
+                       required>
+
+
+                <label>Password</label>
+
+                <input type="password"
+                       name="password"
+                       required>
+
+
+                <button class="btn-primary">
+                    Create Professional Account →
+                </button>
+
+            </form>
+
+
+            <div class="auth-footer">
+
+                Already have account?
+
+                <a href="/">
+                    Log In
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

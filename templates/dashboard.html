@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>OralScan AI Dashboard</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="header">
+
+<div class="logo">
+OralScan AI Dashboard
+</div>
+
+<div class="header-right">
+
+<a href="/history">
+<button class="btn-history">
+View History
+</button>
+</a>
+
+<div class="doctor">
+Dr. Smith
+<div class="doctor-role">
+Oncologist
+</div>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="container">
+
+
+<div>
+
+<div class="card">
+
+<h3>Upload New Scan</h3>
+
+<form method="POST" action="/predict" enctype="multipart/form-data">
+
+<div class="upload-box">
+
+<input type="file" name="image" required>
+
+</div>
+
+<button class="btn">
+Predict
+</button>
+
+</form>
+
+</div>
+<div class="card"> <h4>Scanning Guidelines</h4> <ul> <li>Ensure adequate lighting</li> <li>Keep focus sharp on lesion</li> <li>Maintain proper distance</li> <li>Avoid blur or shadows</li> </ul> </div>
+
+</div>
+
+
+
+<div>
+
+{% if result %}
+
+<div class="card">
+
+<div class="result-header">
+
+<div class="result-title">
+Analysis Results
+</div>
+
+{% if result == "Cancer" and cancer_prob >= 70 %}
+<div class="urgent-badge">
+URGENT ATTENTION
+</div>
+{% endif %}
+
+</div>
+
+
+<div class="result-main
+{% if result=='Cancer' %}red{% else %}green{% endif %}">
+
+{{ result }}
+
+</div>
+
+
+<div class="prob-row">
+
+<span class="label red">Cancer Probability</span>
+
+<span class="value red">{{ cancer_prob }}%</span>
+
+</div>
+
+<div class="bar-container">
+<div class="bar-red" style="width: {{ cancer_prob }}%;"></div>
+</div>
+
+
+<div class="prob-row">
+
+<span class="label green">Normal Probability</span>
+
+<span class="value green">{{ normal_prob }}%</span>
+
+</div>
+
+<div class="bar-container">
+<div class="bar-green" style="width: {{ normal_prob }}%;"></div>
+</div>
+
+</div>
+
+
+<div class="card image-box">
+
+<div>
+
+<h4>Original Image</h4>
+
+<img src="{{ image_path }}">
+
+</div>
+
+
+<div>
+
+<h4>GradCAM Heatmap</h4>
+
+<img src="{{ heatmap_path }}">
+
+<a href="{{ heatmap_path }}" download>
+<button class="btn">
+Download Heatmap
+</button>
+</a>
+
+</div>
+
+</div>
+
+
+<div class="card recommendation">
+
+<h4>Clinical Recommendation</h4>
+
+{% if result == "Cancer" and cancer_prob >= 85 %}
+High-risk lesion detected with {{ cancer_prob }}% confidence. Immediate specialist consultation required.
+
+{% elif result == "Cancer" and cancer_prob >= 50 %}
+Suspicious lesion detected. Specialist consultation recommended.
+
+{% else %}
+No cancer detected. Routine monitoring advised.
+{% endif %}
+
+</div>
+
+
+<div class="card">
+
+<h4>Medical Report</h4>
+
+<a href="/download-report/{{ prediction_id }}">
+<button class="btn">
+Download Full PDF Report
+</button>
+</a>
+
+</div>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</body>
+</html>
